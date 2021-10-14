@@ -4,9 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css"></link>
+    <!-- Bootstarp Links -->
+    <link rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" 
+    crossorigin="anonymous">
+
+    <!-- Axios Link -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+    <script src="./src/index.js" defer></script>
+    <title>POKEDEX</title>
 </head>
 <body>
-    
+    <h1>POKEDEX</h1>
+    <div id="serach-div">
+        <label for="search">Search your favorite pokemon:</label>
+        <input id="searchInput" type="text" placeholder="🔎search here..." name="search">
+        <button id = "serch-btn" >SEARCH!</button>
+    </div>
+
+    <div id="answer div">
+        <ul>
+            <li>Name: 
+                <label id="name"></label>
+            </li>
+            <li>Hight: 
+                <label id="hight"></label>
+            </li>
+            <li>Weight: 
+                <label id="weight"></label>
+            </li>
+            <li>Type: 
+                <select id="typeList"></select>
+                <select id="typeListNames"></select>
+            </li>
+            <li>Image:
+                <img id="pokemon" src="" class="img-thumbnail" alt="pokemon-picture"> 
+            </li>
+        </ul>
+    </div>
+
+    <!-- Bootstarp Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.7/js/mdb.min.js"></script>
+
 </body>
 </html>
