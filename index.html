@@ -18,36 +18,48 @@
 </head>
 
 <body>
+
     <h1><img id="header-Img" src="./img/Pokédex_logo.png"></h1>
+
     <div id="serach-div">
-        <input id="searchInput" type="text" placeholder="🔎Search your favorite pokemon here..." name="search">
+
+        <input id="searchInput" type="text" 
+        placeholder="🔎Search your favorite pokemon here..." name="search">
+
         <button id = "search-btn" >
             <img src="./img/logo-icon.png">
             Search
         </button>
+
     </div>
 
     
     <div id="answer div">
+
         <button id="previous-btn" class="move-btn">⏪</button>
         <button id="next-btn" class="move-btn">⏩</button>
+
         <ul class="pokemon-card">
             <li class="img-area">
                 <!--class="img-thumbnail"alt="pokemon-picture"-->
                 <img id="pokemonImg" src="./img/pokee.png"> 
             </li>
+
             <li class="name"> 
                 <label id="name"></label></br>
                 <label class="label">Name</label>
             </li>
+
             <li class="height"> 
                 <label id="height"></label></br>
                 <label class="label">Height</label>
             </li>
+
             <li class="weight"> 
                 <label id="weight"></label></br>
                 <label class="label">Weight</label>
             </li>
+            
             <li>Type: 
                 <div id="typeList"></div>
                 <select id="typeListNames">
