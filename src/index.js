@@ -21,6 +21,8 @@ const imgElem = document.getElementById("pokemonImg");
 imgElem.addEventListener("mouseover", changeImgToBack);
 imgElem.addEventListener("mouseleave", changeImgToFront);
 
+const typeList = document.getElementById("typeList");
+typeList.addEventListener("change", getTypeUrl);
 /* IMAGE */
 //Changs the pokemon img on mouse leave
 function changeImgToFront(event){
@@ -46,6 +48,7 @@ function updatePokemonDom(){
     weightElem.textContent = PokemonObject.weight;
     imgElem.setAttribute("src", PokemonObject.frontImgSrc);
     createTypesList (PokemonObject.typeList);
+    cleanNamesList();
 }
 
 /*---------- TYPE LISTS ----------*/
@@ -68,6 +71,35 @@ function cleanTypesList() {
     typeElements.forEach(typeElem => {
         if (typeElem.id !== "placeholderType") typeElem.remove();  
     });
+}
+
+/*---------- NAMES LISTS ----------*/
+//Update the names by the type in the names list section
+function getTypeUrl(event) {
+    const typeListElem = document.getElementById("typeList");
+    const type = typeListElem.value;
+    const listIndex = PokemonObject.typeList.indexOf(type);
+    const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
+    getType(namesUrl);   
+}
+//Build name list from names arry
+function NameListToDOM(namesArr) {
+    cleanNamesList();
+    //Build option elements by typeList array
+    const typeListNames = document.getElementById("typeListNames");
+    for (const name of namesArr) {
+        const currentNameElem = document.createElement("option");
+        currentNameElem.textContent = name;
+        typeListNames.appendChild(currentNameElem);
+    }
+}
+
+//Delete all the elements in the names list
+function cleanNamesList() {
+    const typeListNames = document.querySelectorAll("#typeListNames>OPTION");
+    typeListNames.forEach(nameElem => {
+        if (nameElem.id !== "placeholderName") nameElem.remove(); 
+    })
 }
 }
 
@@ -107,5 +139,15 @@ async function searchPokemon(searchInput) {
        alert ("Can't your pokemon find, pleade try again");
        searchBar.value = "";
     }
+}
+//Get url and retuen an array of names thet also have the urls type
+async function getType(url) {
+    const response = await axios.get(url);
+    const data = await response;
+    const namesByTypeArr = [];
+    for (let pokemon of data.data.pokemon) {
+        namesByTypeArr.push(pokemon.pokemon.name);
+    }
+    NameListToDOM(namesByTypeArr);
 }
 
