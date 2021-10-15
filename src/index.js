@@ -1,7 +1,8 @@
 "use strict"
 //Global pokemon object
 let PokemonObject = {
-    name: "test",
+    id: "",
+    name: "",
     height: "", 
     weight: "",
     frontImgSrc: "",
@@ -27,6 +28,26 @@ typeList.addEventListener("change", getTypeUrl);
 const typeListNames = document.getElementById("typeListNames");
 typeListNames.addEventListener("change", reSearchPokemon);
 
+const moveButtons = document.querySelectorAll(".move-btn");
+moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
+
+
+/* HANDLERS */
+//Search the next or previus pokemon on click
+function movePokemon(event) {
+    const currentBtn = event.target;
+    const currentPokemonId = PokemonObject.id;
+    let nextPokeId;
+    if(currentBtn.id === "next-btn") {
+        if (currentPokemonId === "" || currentPokemonId === 898 ) nextPokeId = 1;
+        else nextPokeId = currentPokemonId + 1;
+    }
+    if (currentBtn.id === "previous-btn") {
+        if (currentPokemonId === "" || currentPokemonId === 1 ) nextPokeId = 898;
+        else nextPokeId = currentPokemonId - 1;
+    } 
+    searchPokemon(nextPokeId);
+}
 /* IMAGE */
 //Changs the pokemon img on mouse leave
 function changeImgToFront(event){
@@ -128,6 +149,7 @@ function reSearchPokemon(event) {
 /*---------- POKEMON OBJECT ----------*/
 //Update pokemon object
 function updatePokemonObject(pokemonData) {
+    PokemonObject.id = pokemonData.id;
     PokemonObject.name = pokemonData.name;
     PokemonObject.height = pokemonData.height;
     PokemonObject.weight = pokemonData.weight;

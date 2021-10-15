@@ -71,18 +71,6 @@ h1 > img {
     margin-left: 25%;
     margin-right: 25%;
 }
-/* li {
-    background-color: inherit;
-} */
-/* .img-area {
-    height: 30%;
-    width: 80%;
-    margin-right: 5px;
-    margin-left: 5px;
-    border-width: 5px;
-    border-top-right-radius: 10%;
-    border-top-left-radius: 10%;
-} */
 #pokemonImg{
     background-color: transparent;
     width: 200px;
@@ -109,6 +97,13 @@ h1 > img {
     font-size: 5px;
 }
 
+/*MOVE BUTTONS*/
+.move-btn {
+    height: 10%;
+    width: 10%;
+    font-size: 20px;
+    background-color: lightslategray;
+}
 /*ERROR*/
 .error-messege {
     font-size: 20px;
