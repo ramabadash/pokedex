@@ -23,6 +23,10 @@ imgElem.addEventListener("mouseleave", changeImgToFront);
 
 const typeList = document.getElementById("typeList");
 typeList.addEventListener("change", getTypeUrl);
+
+const typeListNames = document.getElementById("typeListNames");
+typeListNames.addEventListener("change", reSearchPokemon);
+
 /* IMAGE */
 //Changs the pokemon img on mouse leave
 function changeImgToFront(event){
@@ -101,6 +105,11 @@ function cleanNamesList() {
         if (nameElem.id !== "placeholderName") nameElem.remove(); 
     })
 }
+//Re-search pokemon by name list selestion
+function reSearchPokemon(event) {
+    const typeListNames = document.getElementById("typeListNames");
+    const name = typeListNames.value;
+    searchPokemon(name);
 }
 
 /*---------- POKEMON OBJECT ----------*/
