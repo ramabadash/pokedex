@@ -54,6 +54,19 @@ function updatePokemonDom(){
     createTypesList (PokemonObject.typeList);
     cleanNamesList();
 }
+//Play loader
+function playLoader() {
+    const loader = document.createElement("img");
+    loader.setAttribute("src", "./img/pokee.png");
+    loader.classList.add("loader");
+    const searchArea = document.querySelector("#serach-div");
+    searchArea.appendChild(loader);  
+}
+
+//Stop loader
+function stopLoader() {
+    document.querySelector(".loader").remove();
+}
 
 /*---------- TYPE LISTS ----------*/
 //Get an arry of string types, 
@@ -133,6 +146,7 @@ function updatePokemonObject(pokemonData) {
 //Serch pokemon by ID or Name and update the PokemonObject with the data 
 async function searchPokemon(searchInput) {
     try {
+        playLoader();
         const searchBar = document.getElementById("searchInput");
         //Sent GET request
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchInput}/`);
@@ -144,10 +158,13 @@ async function searchPokemon(searchInput) {
         updatePokemonDom();//Update DOM
 
         searchBar.value = "";
+
+        stopLoader();
     } catch (error) {
        const searchBar = document.getElementById("searchInput");
        searchBar.value = "";
        errorMessege("can't find your pokemon");
+       stopLoader();
     }
 }
 //Get url and retuen an array of names thet also have the urls type

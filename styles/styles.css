@@ -23,7 +23,36 @@ h1 > img {
 #search-btn {
     background-color: lightslategray;
 }
-
+/*LOADER*/
+.loader {
+    height: 100px;
+    width: 100px;
+    margin-right: 50%;
+    margin-left: 50%;
+    animation: rotateLoader 4s infinite;
+    animation-timing-function: ease-in-out;
+}
+@keyframes rotateLoader {
+    0% {
+      transform: rotate(0);
+    }
+  
+    25% {
+      transform: rotate(90deg);
+    }
+  
+    50% {
+      transform: rotate(180deg);
+    }
+  
+    75% {
+      transform: rotate(270deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
 /*POKEMON CARD*/
 .pokemon-card {
