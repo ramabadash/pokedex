@@ -186,10 +186,16 @@ async function searchPokemon(searchInput) {
 }
 //Get url and retuen an array of names thet also have the urls type
 async function getType(url) {
-    const response = await axios.get(url);
-    const data = await response;
+    const response = await fetch(url, {
+        method:"GET",
+        headers: {  
+            Accept: "application/json",
+            "Content-Type": "application/json" 
+        }
+    });
+    const data = await response.json();
     const namesByTypeArr = [];
-    for (let pokemon of data.data.pokemon) {
+    for (let pokemon of data.pokemon) {
         namesByTypeArr.push(pokemon.pokemon.name);
     }
     NameListToDOM(namesByTypeArr);
