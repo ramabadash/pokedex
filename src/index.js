@@ -97,7 +97,7 @@ function createTypesList(typeList) {
     for (const type of typeList) {
         const currentTypeElem = document.createElement("span");
         currentTypeElem.textContent = type;
-        currentTypeElem.classList.add("type");
+        currentTypeElem.classList.add("type", type);
         currentTypeElem.addEventListener("click", getTypeUrl)
         typeListElem.appendChild(currentTypeElem)
     }
@@ -113,6 +113,7 @@ function getTypeUrl(event) {
     const type = event.target.textContent;
     const listIndex = PokemonObject.typeList.indexOf(type);
     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
+
     getType(namesUrl);   
 }
 //Build name list from names arry
@@ -186,19 +187,23 @@ async function searchPokemon(searchInput) {
 }
 //Get url and retuen an array of names thet also have the urls type
 async function getType(url) {
-    const response = await fetch(url, {
-        method:"GET",
-        headers: {  
-            Accept: "application/json",
-            "Content-Type": "application/json" 
+    try {
+        const response = await fetch(url, {
+            method:"GET",
+            headers: {  
+                Accept: "application/json",
+                "Content-Type": "application/json" 
+            }
+        });
+        const data = await response.json();
+        const namesByTypeArr = [];
+        for (let pokemon of data.pokemon) {
+            namesByTypeArr.push(pokemon.pokemon.name);
         }
-    });
-    const data = await response.json();
-    const namesByTypeArr = [];
-    for (let pokemon of data.pokemon) {
-        namesByTypeArr.push(pokemon.pokemon.name);
+        NameListToDOM(namesByTypeArr);
+    } catch (error) {
+        errorMessege("sorry something went wrong");
     }
-    NameListToDOM(namesByTypeArr);
 }
 /*---------- ERROR HANDLERS ----------*/
 function errorMessege(messege) {
