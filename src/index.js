@@ -5,8 +5,8 @@ let PokemonObject = {
     name: "",
     height: "", 
     weight: "",
-    frontImgSrc: "",
-    backImgSrc: "",
+    frontImgSrc: "./img/pokee.png",
+    backImgSrc: "./img/pokee.png",
     typeList: [],
     namesRelatedToTypesUrls: []
 }

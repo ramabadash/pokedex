@@ -1,7 +1,12 @@
 * {
     font-family: Gluten;
-    background-color: rgb(35, 55, 78);
-    color: blanchedalmond;
+    /* background-color: rgb(48, 109, 124); */
+    color: rgb(34, 31, 51);
+}
+body {
+    background-image: url("/img/3062895.jpg");
+    /* background-image: url("/img/5451975.jpg"); */
+    background-size: cover;
 }
 img {
     background-color: transparent;
@@ -60,6 +65,7 @@ h1 > img {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+    background-color: rgba(48, 109, 124, 0.8);
     border: grey;
     border-style: solid;
     border-radius: 10%;
@@ -70,6 +76,15 @@ h1 > img {
     height: 30%;
     margin-left: 25%;
     margin-right: 25%;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+}
+li {
+    width: 70%;
+    margin: 5px;
+    text-align: center;
+
 }
 #pokemonImg{
     background-color: transparent;
@@ -78,14 +93,15 @@ h1 > img {
 }
 .name, .height, .weight {
     border-style: solid;
-    border-radius: 10%;
+    border-radius: 5%;
     padding: 3px;
+    background-color: lightsteelblue;
 }
 #name {
-    background-color: cadetblue;
+    background-color: inherit;
 }
 #height, #weight{
-    background-color: rgb(76, 163, 123);
+    background-color: inherit(76, 163, 123);
 }
 #typeList, #typeListNames { 
     width: 90%;
