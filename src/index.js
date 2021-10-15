@@ -10,7 +10,7 @@ let PokemonObject = {
     namesRelatedToTypesUrls: []
 }
 /* EVENT LISTENERS */
-const searchBtn = document.getElementById("serch-btn");
+const searchBtn = document.getElementById("search-btn");
 searchBtn.addEventListener("click", (event)=> {
     const searchInput = document.getElementById("searchInput");
     const searchValue = searchInput.value;
@@ -164,6 +164,7 @@ async function getType(url) {
 function errorMessege(messege) {
     const errorElem = document.createElement("div");
     errorElem.textContent = `Sorry ${messege}, please try again! ❌`;
+    errorElem.classList.add("error-messege");
     const searchArea = document.querySelector("#serach-div");
     searchArea.appendChild(errorElem);
     setTimeout(() => errorElem.remove() , 3000);

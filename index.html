@@ -5,51 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/styles.css"></link>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gluten:wght@300&display=swap">
     <!-- Bootstarp Links -->
-    <link rel="stylesheet" 
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-    crossorigin="anonymous">
-    <link rel="stylesheet" 
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" 
-    crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Axios Link -->
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
     <script src="./src/index.js" defer></script>
     <title>POKEDEX</title>
 </head>
+
 <body>
-    <h1>POKEDEX</h1>
+    <h1><img id="header-Img" src="./img/Pokédex_logo.png"></h1>
     <div id="serach-div">
-        <label for="search">Search your favorite pokemon:</label>
-        <input id="searchInput" type="text" placeholder="🔎search here..." name="search">
-        <button id = "serch-btn" >SEARCH!</button>
+        <input id="searchInput" type="text" placeholder="🔎Search your favorite pokemon here..." name="search">
+        <button id = "search-btn" >
+            <img src="./img/logo-icon.png">
+            Search
+        </button>
     </div>
 
     <div id="answer div">
-        <ul>
-            <li>Name: 
-                <label id="name"></label>
+        <ul class="pokemon-card">
+            <li class="img-area">
+                <!--class="img-thumbnail"alt="pokemon-picture"-->
+                <img id="pokemonImg" src=""> 
             </li>
-            <li>Hight: 
-                <label id="height"></label>
+            <li class="name"> 
+                <label id="name"></label></br>
+                <label class="label">Name</label>
             </li>
-            <li>Weight: 
-                <label id="weight"></label>
+            <li class="height"> 
+                <label id="height"></label></br>
+                <label class="label">Height</label>
+            </li>
+            <li class="weight"> 
+                <label id="weight"></label></br>
+                <label class="label">Weight</label>
             </li>
             <li>Type: 
                 <select id="typeList">
                     <option id="placeholderType">Select Type</option>
-                </select>
+                </select></br>
                 <select id="typeListNames">
                     <option id="placeholderName">Select Polkemon</option>
                 </select>
-            </li>
-            <li>
-                <img id="pokemonImg" src="" class="img-thumbnail" alt="pokemon-picture"> 
             </li>
         </ul>
     </div>
