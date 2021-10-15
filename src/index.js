@@ -145,8 +145,9 @@ async function searchPokemon(searchInput) {
 
         searchBar.value = "";
     } catch (error) {
-       alert ("Can't your pokemon find, pleade try again");
+       const searchBar = document.getElementById("searchInput");
        searchBar.value = "";
+       errorMessege("can't find your pokemon");
     }
 }
 //Get url and retuen an array of names thet also have the urls type
@@ -159,4 +160,11 @@ async function getType(url) {
     }
     NameListToDOM(namesByTypeArr);
 }
-
+/*---------- ERROR HANDLERS ----------*/
+function errorMessege(messege) {
+    const errorElem = document.createElement("div");
+    errorElem.textContent = `Sorry ${messege}, please try again! ❌`;
+    const searchArea = document.querySelector("#serach-div");
+    searchArea.appendChild(errorElem);
+    setTimeout(() => errorElem.remove() , 3000);
+}
