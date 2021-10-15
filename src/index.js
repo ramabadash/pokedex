@@ -11,11 +11,19 @@ let PokemonObject = {
     namesRelatedToTypesUrls: []
 }
 /* EVENT LISTENERS */
+const searchInput = document.getElementById("searchInput");
+
 const searchBtn = document.getElementById("search-btn");
 searchBtn.addEventListener("click", (event)=> {
-    const searchInput = document.getElementById("searchInput");
     const searchValue = searchInput.value;
     searchPokemon(searchValue);
+});
+
+searchInput.addEventListener("keyup", (event)=>{
+    if (event.key === "Enter") {
+        const searchValue = searchInput.value;
+        searchPokemon(searchValue);
+    };
 });
 
 const imgElem = document.getElementById("pokemonImg");
