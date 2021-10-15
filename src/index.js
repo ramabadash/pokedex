@@ -22,9 +22,6 @@ const imgElem = document.getElementById("pokemonImg");
 imgElem.addEventListener("mouseover", changeImgToBack);
 imgElem.addEventListener("mouseleave", changeImgToFront);
 
-const typeList = document.getElementById("typeList");
-typeList.addEventListener("change", getTypeUrl);
-
 const typeListNames = document.getElementById("typeListNames");
 typeListNames.addEventListener("change", reSearchPokemon);
 
@@ -92,30 +89,28 @@ function stopLoader() {
 /*---------- TYPE LISTS ----------*/
 //Get an arry of string types, 
 //create list elements and append them to the type list section
-function createTypesList (typeList) {
+function createTypesList(typeList) {
     cleanTypesList();
 
     //Build option elements by typeList array
     const typeListElem = document.getElementById("typeList");
     for (const type of typeList) {
-        const currentTypeElem = document.createElement("option");
+        const currentTypeElem = document.createElement("span");
         currentTypeElem.textContent = type;
+        currentTypeElem.classList.add("type");
+        currentTypeElem.addEventListener("click", getTypeUrl)
         typeListElem.appendChild(currentTypeElem)
     }
 }
 //Delete all the elements in the types list
 function cleanTypesList() {
-    const typeElements = document.querySelectorAll("#typeList>OPTION");
-    typeElements.forEach(typeElem => {
-        if (typeElem.id !== "placeholderType") typeElem.remove();  
-    });
+    const typeElements = document.querySelectorAll("#typeList>span");
+    typeElements.forEach(typeElem => typeElem.remove());
 }
-
 /*---------- NAMES LISTS ----------*/
 //Update the names by the type in the names list section
 function getTypeUrl(event) {
-    const typeListElem = document.getElementById("typeList");
-    const type = typeListElem.value;
+    const type = event.target.textContent;
     const listIndex = PokemonObject.typeList.indexOf(type);
     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
     getType(namesUrl);   
