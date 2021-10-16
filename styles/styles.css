@@ -1,0 +1,167 @@
+* {
+    font-family: Gluten;
+    color: rgb(34, 31, 51);
+}
+body {
+    background-color: rgb(124, 112, 194);
+    background-image: url("https://i.pinimg.com/originals/26/b5/55/26b5551ba10f013a335e91b98f530d51.png");
+    background-size: cover;
+}
+img {
+    background-color: transparent;
+}
+
+/*HEADER*/
+h1 > img {
+    height: 80%;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+/*SEARCH AREA*/
+#searchInput {
+    width: 90%;
+    font-size: 20px;
+    text-align: center;
+}
+#search-btn {
+    background-color: lightslategray;
+}
+/*LOADER*/
+.loader {
+    height: 100px;
+    width: 100px;
+    margin-right: 50%;
+    margin-left: 50%;
+    animation: rotateLoader 4s infinite;
+    animation-timing-function: ease-in-out;
+}
+@keyframes rotateLoader {
+    0% {
+      transform: rotate(0);
+    }
+  
+    25% {
+      transform: rotate(90deg);
+    }
+  
+    50% {
+      transform: rotate(180deg);
+    }
+  
+    75% {
+      transform: rotate(270deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+/*POKEMON CARD*/
+.pokemon-card {
+    list-style: none;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(48, 109, 124, 0.8);
+    border: grey;
+    border-style: solid;
+    border-radius: 10%;
+    border-width: 5px;
+    align-items: center;
+    font-size: 20px;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+}
+li {
+    width: 70%;
+    margin: 5px;
+    text-align: center;
+
+}
+#pokemonImg{
+    background-color: transparent;
+    width: 50%;
+    height: 150px;
+}
+.name, .height, .weight {
+    border-style: solid;
+    border-radius: 5%;
+    padding: 3px;
+    background-color: lightsteelblue;
+}
+#name {
+    background-color: inherit;
+}
+#height, #weight{
+    background-color: inherit(76, 163, 123);
+}
+#typeList, #typeListNames { 
+    width: 90%;
+    height: auto;
+    font-size: 20px;
+}
+.type {
+    height: auto;
+    width: auto;
+    margin: 10px;
+    padding: 4px;
+    border: black;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10%;
+    cursor: pointer;
+}
+.type:hover {
+    background-color: white;
+    color: rgba(43, 196, 107, 0.425);
+}
+.label {
+    background-color: inherit;
+    font-size: 5px;
+}
+/*DROPDOWM NAMES LIST*/
+.dropDown {
+    list-style: none;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    height: 20%;
+    width: 20%;
+    overflow: scroll;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropDown li {
+    border-top-style: solid;
+    border-top: grey;
+    border-top-width: 2px;
+}
+.dropDown li:hover {
+    background-color: #ddd;
+    color: red;
+}
+.show {
+    display: inline-block;
+}
+/*MOVE BUTTONS*/
+.move-btn {
+    height: 10%;
+    width: 10%;
+    font-size: 20px;
+    background-color: lightslategray;
+}
+/*ERROR*/
+.error-messege {
+    font-size: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    background-color: darksalmon;
+    text-align: center;
+}
