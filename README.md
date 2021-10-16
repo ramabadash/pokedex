@@ -1,29 +1,65 @@
 # Pokedex Task
+# Rama's solution
 -----
+The solution is in the solution folder. Written using
 
-In this task you will build your own pokédex! Read,learn and use https://pokeapi.co/
-
-## Setup:
+* HTML
+* JS - with axios.
+* CSS
+---- 
+![Example](./img/my_app.png)
 ----
-* [X] Create a new repo called "pokedex" using the Skelton defined here
-* [X] Work on your brunch
-* [ ] Create a PR and submit it in the classroom
-* [X] Use axios to fetch the pokeAPI
 
-## Pokedex
+### Getting started:
 ----
-* [X] Read about cross origion and way to handle it
-* [X] Use this chrome extenstion for unblock cross origion when working on local file
-* [X] Show Pockemon name height weight and image on search id
-* [X] Make the image change to back_default on hover
-* [X] Support search by name (HINT)
-* [X] Add not found message if the API return it (case the pockemon doesnt exist)
-* [X] Show list of types names for each pockemon
-* [X] On click on one of the pockemon types show list of all the pokemons names that related to this type (HINT))
-* [X] On Click on one of the pockemon name change the pokedex context by changing the input value to the name of the pockemon
+#### Installation
+* Clone this repo! - https://github.com/ramabadash/pokedex/tree/rama's-pok%C3%A9dex
 
-## Bonus:
-----
-* [X] Use fetch insted of axios in two functions
-* [ ] Use bootstrap for efficient and easy design
-* [X] Add design and features of your choice
+
+* My GitHub page - 
+
+---
+### Page Structure
+---
+* **Search bar** - You can search for your favorite Pokemon with a name or ID!
+* **Search button** 
+* **Next and Previus buttons** 
+* **Poke card**- With : Image, Name, Height, Weight, Type.
+
+---- 
+### Interaction
+---
+* **Search** - You can search for your favorite Pokemon with a name or ID! To search for it, click on the search button or the "Enter" key.
+* **Switch between Pokemon** - You can press the "forward" and "backward" buttons to easily skip between Pokemon.
+![buttons_img](./img/buttons.png)
+
+* **Type Names** - By clicking on the type of Pokemon you can see a list of names of other Pokemon with the same type. Another click will close the list.
+* **Names list** - If you want to go to one of the Pokemon from the list of names you can click on it and it will be shown to you on the card.
+![namesList_img](./img/names_list.png)
+
+* **Error massege** - If you entered an incorrect name or ID to worry, you will be presented with a custom message and you can try again.
+![ERROR_img](./img/error_massege.png)
+
+* **Back picture** - Going over the Pokemon image will show you an image from behind. When you leave the image will change back.
+![Back_img](./img/back_defult.png)
+
+* **Type background** - Each type of color has its own custom background.
+
+![Type3_img](./img/type3.png)
+![Type2_img](./img/type2.png)
+* **Loader** - Pokémon loader rotating!
+
+![Loader_img](./img/loader.png)
+
+* **Defult card** - 
+![Defult_img](./img/defult_screen.png)
+---
+### Future
+---
+* **Pokemon Collection** - You can add Pokemon to your personal collection by clicking a custom button.
+
+---
+### Thanks
+---
+* **Poke API** - https://pokeapi.co/
+
