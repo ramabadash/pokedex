@@ -11,7 +11,6 @@ const heightElem = document.getElementById("height");
 const weightElem = document.getElementById("weight");
 const imgElem = document.getElementById("pokemonImg");
 const typeListElem = document.getElementById("typeList");
-const typeListNames = document.getElementById("typeListNames");
 
 /*---------- EVENT LISTENERS ----------*/
 //Serach related event listeners
@@ -29,8 +28,7 @@ searchInput.addEventListener("keyup", (event)=>{
 //Poke Img related event listeners
 imgElem.addEventListener("mouseover", changeImgToBack);
 imgElem.addEventListener("mouseleave", changeImgToFront);
-//re-Search Pokemon on name select
-typeListNames.addEventListener("change", reSearchPokemon);
+
 //Search the next or previus pokemon on click
 moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
 
@@ -51,6 +49,13 @@ function movePokemon(event) {
         else nextPokeId = currentPokemonId - 1;
     } 
     searchPokemon(nextPokeId);
+}
+//Display and hidde names list on click
+function showNames(event) {
+    if (event.target.tagName !== "BUTTON") return; //if click us on list item (name)
+    const currentType = event.target;
+    const namesList = currentType.firstElementChild;
+    namesList.classList.toggle("show"); //display / hidde the names list
 }
 
 /*---------- POKE IMAGE ----------*/
@@ -74,7 +79,6 @@ function updatePokemonDom(){
     weightElem.textContent = PokemonObject.weight; //update weight
     imgElem.setAttribute("src", PokemonObject.frontImgSrc); //update img
     createTypesList (PokemonObject.typeList); //update TypesList
-    cleanNamesList();//update NamesList
 }
 //Play loader
 function playLoader() {
@@ -97,24 +101,27 @@ function createTypesList(typeList) {
     cleanTypesList();
     //Build type elements by typeList array
     for (const type of typeList) {
-        const currentTypeElem = document.createElement("span");
+        const currentTypeElem = document.createElement("button");
         currentTypeElem.textContent = type;
-        currentTypeElem.classList.add("type", type);
-        currentTypeElem.addEventListener("click", getTypeUrl); 
+        //classes - type for the background, current-type to know to wich type the names list belongs to
+        currentTypeElem.classList.add("type", type, "current-type"); 
+        currentTypeElem.addEventListener("click", showNames); //hidde and show names list
         typeListElem.appendChild(currentTypeElem); //Add to DOM
+
+        getTypeUrl(type); //sends the type name to find and build the names list
     }
 }
 //Delete all the elements in the types list
 function cleanTypesList() {
-    const typeElements = document.querySelectorAll("#typeList>span");
+    const typeElements = document.querySelectorAll("#typeList>button");
     typeElements.forEach(typeElem => typeElem.remove());
 }
 
 /*---------- NAMES LISTS ----------*/
 
-//Get the currect URL fropm the poke object and sends to getType function
-function getTypeUrl(event) {
-    const type = event.target.textContent;
+//Get the currect URL from the poke object and sends to getType function 
+//to find names list
+function getTypeUrl(type) {
     const listIndex = PokemonObject.typeList.indexOf(type);
     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
 
@@ -122,24 +129,25 @@ function getTypeUrl(event) {
 }
 //Build name list from names arry to the DOM
 function NameListToDOM(namesArr) {
-    cleanNamesList();
-    //Build option elements by typeList array
+    //Create the list element with the drop down class for design
+    const currentNameList = document.createElement("ul");
+    currentNameList.classList.add("dropDown");
+
+    //Build li elements by name List array and append to ul element
     for (const name of namesArr) {
-        const currentNameElem = document.createElement("option");
+        const currentNameElem = document.createElement("li");
         currentNameElem.textContent = name;
-        typeListNames.appendChild(currentNameElem);
+        currentNameElem.addEventListener("click", reSearchPokemon); //search pokemon by name on click
+        currentNameList.appendChild(currentNameElem);
     }
-}
-//Delete all the elements in the names list
-function cleanNamesList() {
-    const typeListNames = document.querySelectorAll("#typeListNames>OPTION");
-    typeListNames.forEach(nameElem => {
-        if (nameElem.id !== "placeholderName") nameElem.remove(); 
-    })
+    //Find the current type that the names list belongs to and append the list
+    const typeParantElem = document.querySelector(".current-type");
+    typeParantElem.appendChild(currentNameList);
+    typeParantElem.classList.remove("current-type"); //remove class - not current building type anymore
 }
 //Re-search pokemon by name list selestion
 function reSearchPokemon(event) {
-    const name = typeListNames.value;
+    const name = event.target.textContent;
     searchPokemon(name);
 }
 
@@ -182,7 +190,7 @@ function updatePokemonObject(pokemonData) {
 async function searchPokemon(searchValue) {
     try {
         playLoader();
-        //Sent GET request
+        //Send GET request
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchValue}/`);
         const data = await response;
         const pokemonAns = data.data;
@@ -212,7 +220,7 @@ async function getType(url) {
             }
         });
         const data = await response.json();
-        
+
         //Build the names array
         const namesByTypeArr = [];
         for (let pokemon of data.pokemon) {
