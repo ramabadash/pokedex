@@ -16,7 +16,7 @@ The solution is in the solution folder. Written using
 * Clone this repo! - https://github.com/ramabadash/pokedex/tree/rama's-pok%C3%A9dex
 
 
-* My GitHub page - 
+* My GitHub page - https://ramabadash.github.io/pokedex/
 
 ---
 ### Page Structure
