@@ -47,7 +47,7 @@ function movePokemon(event) {
         //if(     empty page        ||       first pokemon    )
         if (currentPokemonId === "" || currentPokemonId === 1 ) nextPokeId = 898;
         else nextPokeId = currentPokemonId - 1;
-    } else nextPokeId = 1 ;
+    }
     searchPokemon(nextPokeId);
 }
 //Display and hidde names list on click
