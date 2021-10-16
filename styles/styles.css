@@ -3,7 +3,7 @@
     color: rgb(34, 31, 51);
 }
 body {
-    background-image: url("../img/3062895.jpg");
+    background-image: url("/3062895.jpg");
     background-size: cover;
 }
 img {
