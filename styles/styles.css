@@ -19,13 +19,14 @@ h1 > img {
     margin-right: 35%;
 }
 /*SEARCH AREA*/
-#searchInput {
-    width: 90%;
+#searchInputName, #searchInputId, #userName {
+    width: 40%;
     font-size: 20px;
     text-align: center;
 }
-#search-btn {
+#search-name-btn,  #search-id-btn{
     background-color: lightslategray;
+    border-radius: 10%;
 }
 /*LOADER*/
 .loader {
@@ -106,7 +107,7 @@ li {
     height: auto;
     font-size: 20px;
 }
-.type {
+.type, .ability {
     height: auto;
     width: auto;
     margin: 10px;
