@@ -138,17 +138,32 @@ async function searchPokemonByID(searchId) {
         });
         const pokemonAns = await response.data;
         updatePokemonObject(pokemonAns);//Update PokemonObject
-
         updatePokemonDom();//Update DOM
-
         searchInputID.value = ""; //clean search input
-
         stopLoader();
     } catch (error) {
        searchInputID.value = ""; //clean search input
-       console.log(error)
        errorMessege(error.status);
        stopLoader();
+    }
+}
+//Return array of poke names related to this type
+async function getType(type) {
+    try {
+        const userName = document.getElementById("userName").value;
+        playLoader();
+        const response = await axios.get(`${baseUrl}/pokemon/type/${type}`, {
+            headers: {
+                "username": userName,
+            }
+        });
+        const namesArray = await response.data;
+        NameListToDOM(namesArray); //Build the names on the DOM
+        stopLoader();
+
+    } catch (error) {
+        errorMessege(error);
+        stopLoader();
     }
 }
 
@@ -291,7 +306,7 @@ function createTypesList(typeList) {
         currentTypeElem.addEventListener("click", showNames); //hidde and show names list
         typeListElem.appendChild(currentTypeElem); //Add to DOM
 
-        //getTypeUrl(type); //sends the type name to find and build the names list
+        getType(type); //sends the type name to find and build the names list
     }
 }
 //Delete all the elements in the types list
@@ -304,12 +319,12 @@ function cleanTypesList() {
 
 //Get the currect URL from the poke object and sends to getType function 
 //to find names list
-function getTypeUrl(type) {
-    const listIndex = PokemonObject.types.indexOf(type);
-    const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
+// function getTypeUrl(type) {
+//     const listIndex = PokemonObject.types.indexOf(type);
+//     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
 
-    //getType(namesUrl);   
-}
+//     getType(namesUrl);   
+// }
 //Build name list from names arry to the DOM
 function NameListToDOM(namesArr) {
     //Create the list element with the drop down class for design
@@ -344,7 +359,6 @@ let PokemonObject = {
     front_pic: "./img/pokee.png",
     back_pic: "./img/pokee.png",
     types: [],
-    namesRelatedToTypesUrls: [],
     abilities: []
 }
 
@@ -358,7 +372,6 @@ function updatePokemonObject(pokemonData) {
     PokemonObject.front_pic = pokemonData.front_pic;
     PokemonObject.back_pic = pokemonData.back_pic;
     PokemonObject.types = [];
-    PokemonObject.namesRelatedToTypesUrls = [];
     PokemonObject.abilities =[];
 
     //Update 2 arrays 1-types arry 2-types urls in the same order,
@@ -383,49 +396,4 @@ function errorMessege(messege) {
     setTimeout(() => errorElem.remove() , 5000);
 }
 
-// //Serch pokemon by ID or Name and update the PokemonObject with the data 
-// async function searchPokemon(searchValue) {
-//     try {
-//         playLoader();
-//         //Send GET request
-//         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchValue}/`);
-//         const data = await response;
-//         const pokemonAns = data.data;
 
-//         updatePokemonObject(pokemonAns);//Update PokemonObject
-
-//         updatePokemonDom();//Update DOM
-
-//         searchInput.value = ""; //clean search input
-
-//         stopLoader();
-//     } catch (error) {
-//         searchInput.value = ""; //clean search input
-//        errorMessege("can't find your pokemon");
-//        stopLoader();
-//     }
-// }
-//Get url, send a GET request to the poke API ,
-//and return an array of names thet also have the type that the url belongs to
-// async function getType(url) {
-//     try {
-//         const response = await fetch(url, {
-//             method:"GET",
-//             headers: {  
-//                 Accept: "application/json",
-//                 "Content-Type": "application/json" 
-//             }
-//         });
-//         const data = await response.json();
-
-//         //Build the names array
-//         const namesByTypeArr = [];
-//         for (let pokemon of data.pokemon) {
-//             namesByTypeArr.push(pokemon.pokemon.name);
-//         }
-        
-//         NameListToDOM(namesByTypeArr); //Build the names on the DOM
-//     } catch (error) {
-//         errorMessege("sorry something went wrong");
-//     }
-// }
