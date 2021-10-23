@@ -280,6 +280,7 @@ function makePokeCollection(collectionArray) {
         for (let poke of collectionArray) { 
             poke = JSON.parse(poke); //parse info
             const pokeElem = document.createElement("li"); //poke container
+            pokeElem.classList.add("poke-container");
             const pokeName = document.createElement("span");
             pokeName.textContent = poke.name;
             pokeName.classList.add("pokeName");

@@ -75,13 +75,19 @@ h1 > img {
     margin: 5px;
     width: fit-content;
     height: 10%;
-    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 .poke-list {
     list-style: none;
     display: flex;
     flex-direction: row;
     width: fit-content;
+}
+.poke-container {
+    display: flex;
+    flex-direction: column-reverse;
 }
 .pokeName {
     background-color: brown;
@@ -167,6 +173,9 @@ li {
 .label {
     background-color: inherit;
     font-size: 5px;
+}
+.abilitiesList {
+    width: fit-content;
 }
 .ability {
     background-color: rgb(41, 72, 112);
