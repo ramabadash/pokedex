@@ -6,7 +6,7 @@ const searchArea = document.querySelector("#serach-div");
 
 const searchBtnID = document.getElementById("search-id-btn");
 const searchInputID = document.getElementById("searchInputId");
-const searchBtnName = document.getElementById("search--name-btn");
+const searchBtnName = document.getElementById("search-name-btn");
 const searchInputName = document.getElementById("searchInputName");
 
 let searchValue;
@@ -25,16 +25,16 @@ const collectionBtn = document.getElementById("collection-btn");
 
 /*---------- EVENT LISTENERS ----------*/
 //Serach related event listeners
-// searchBtnName.addEventListener("click", (event)=> {
-//     searchValue = searchInput.value.toLowerCase();
-//     searchPokemon(searchValue);
-// });
-// searchInputName.addEventListener("keyup", (event)=>{
-//     if (event.key === "Enter") {
-//         searchValue = searchInput.value.toLowerCase();
-//         searchPokemon(searchValue);
-//     };
-// });
+searchBtnName.addEventListener("click", (event)=> {
+    searchValue = searchInputName.value.toLowerCase();
+    searchPokemonByName(searchValue);
+});
+searchInputName.addEventListener("keyup", (event)=>{
+    if (event.key === "Enter") {
+        searchValue = searchInputName.value.toLowerCase();
+        searchPokemonByName(searchValue);
+    };
+});
 searchBtnID.addEventListener("click", (event)=> {
     searchPokemonByID(searchInputID.value);
 });
@@ -50,11 +50,13 @@ imgElem.addEventListener("mouseleave", changeImgToFront);
 //Search the next or previus pokemon on click
 moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
 
-//catchBtn.addEventListener("click", catchPoke);
+catchBtn.addEventListener("click", catchPoke);
 releaseBtn.addEventListener("click", releasePoke);
 collectionBtn.addEventListener("click", showcollection);
 
 /*---------- NETWORK ----------*/
+//POKEMONS CPLLECTION
+
 //Show users collection 
 async function showcollection() {
     try {
@@ -66,7 +68,6 @@ async function showcollection() {
             }
         })
         const collectionArray = await response.data;
-        console.log(collectionArray);
 
         collectionToDom(collectionArray);
 
@@ -76,7 +77,7 @@ async function showcollection() {
         stopLoader();
     }
 }
-
+//CATCH & RELEASE POKEMONS
 
 //Release poke from user collection
 async function releasePoke() {
@@ -92,6 +93,35 @@ async function releasePoke() {
     } catch(error) {
         errorMessege(error);
         stopLoader();
+    }
+}
+//
+async function catchPoke() {
+    try {
+        playLoader();
+        const userName = document.getElementById("userName").value;
+        const response = await fetch(`${baseUrl}/pokemon/catch/${PokemonObject.id}`, {
+            method: "PUT", 
+            headers: {
+                "username" : userName,
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({"pokemon" : PokemonObject}),
+        });
+        stopLoader();
+    } catch (error) {
+        errorMessege(error);
+        stopLoader();
+    }
+}
+
+//SERACH POKEMONS
+//
+async function searchPokemonByName(searchName){
+    try {
+
+    } catch (error) {
+
     }
 }
 
@@ -184,6 +214,8 @@ function stopLoader() {
     document.querySelector(".loader").remove();
 }
 
+/*---------- POKE COLLECTION ----------*/
+
 //Add collection to DOM
 function collectionToDom(collectionArray) {
     //container element
@@ -201,13 +233,13 @@ function collectionToDom(collectionArray) {
         emptyMessege.textContent = "Youre collectioin is empty";
         currectCollection.appendChild(emptyMessege);
     } else {
-        const pokeList = makePoleCOllection(collectionArray); //create collection representors
+        const pokeList = makePokeCollection(collectionArray); //create collection representors
         currectCollection.appendChild(pokeList);     //append to dom
     }
     searchArea.appendChild(currectCollection);
 }
 //
-function makePoleCOllection(collectionArray) {
+function makePokeCollection(collectionArray) {
     const pokeList = document.createElement("ul");
         pokeList.classList.add("poke-list")
         for (let poke of collectionArray) { 
