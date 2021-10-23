@@ -94,6 +94,7 @@ async function releasePoke() {
                 "username": userName,
             }
         });
+        successMessege("You released the pokemon");
         stopLoader();
     } catch(error) {
         errorMessege(error);
@@ -113,6 +114,7 @@ async function catchPoke() {
             }, 
             body: JSON.stringify({"pokemon" : PokemonObject}),
         });
+        successMessege("You caught the pokemon");
         stopLoader();
     } catch (error) {
         errorMessege(error);
@@ -293,7 +295,7 @@ function makePokeCollection(collectionArray) {
 
 /*---------- ABILITY LISTS ----------*/
 
-//Get an arry of string types, 
+//Get an arry of string abilities, 
 ///create list elements and append them to the ability list section
 function createAbilitiesList(abilityList) {
     cleanAbilitiesList();
@@ -407,5 +409,16 @@ function errorMessege(messege) {
     searchArea.appendChild(errorElem);
     setTimeout(() => errorElem.remove() , 5000);
 }
+
+/*---------- SUCSSES HANDLERS ----------*/
+function successMessege(messege) {
+    const successElem = document.createElement("div");
+    successElem.textContent = `${messege}, Good job! 👾`;
+    successElem.classList.add("sucsses-messege");
+    const searchArea = document.querySelector("#serach-div");
+    searchArea.appendChild(successElem);
+    setTimeout(() => successElem.remove() , 5000);
+}
+
 
 

@@ -6,6 +6,7 @@ body {
     background-color: rgb(124, 112, 194);
     background-image: url("https://i.pinimg.com/originals/26/b5/55/26b5551ba10f013a335e91b98f530d51.png");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 img {
     background-color: transparent;
@@ -219,3 +220,13 @@ li {
     background-color: darksalmon;
     text-align: center;
 }
+/*SUCSSES*/
+.sucsses-messege {
+    font-size: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgb(65, 187, 75);
+    text-align: center;
+}
+
