@@ -114,14 +114,27 @@ async function catchPoke() {
         stopLoader();
     }
 }
-
 //SERACH POKEMONS
-//
+//Serach pokemon by name
 async function searchPokemonByName(searchName){
     try {
-
+        const userName = document.getElementById("userName").value;
+        playLoader();
+        //Send GET request
+        const response = await axios.get(`${baseUrl}/pokemon/get/${searchName}/`, {
+            "headers": {
+                 "username": userName
+                } 
+        });
+        const pokemonAns = await response.data;
+        updatePokemonObject(pokemonAns);//Update PokemonObject
+        updatePokemonDom();//Update DOM
+        searchInputName.value = ""; //clean search input
+        stopLoader();
     } catch (error) {
-
+        searchInputName.value = ""; //clean search input
+       errorMessege(error);
+       stopLoader();
     }
 }
 
@@ -143,7 +156,7 @@ async function searchPokemonByID(searchId) {
         stopLoader();
     } catch (error) {
        searchInputID.value = ""; //clean search input
-       errorMessege(error.status);
+       errorMessege(error);
        stopLoader();
     }
 }
@@ -253,7 +266,7 @@ function collectionToDom(collectionArray) {
     }
     searchArea.appendChild(currectCollection);
 }
-//
+//Add poke names and images
 function makePokeCollection(collectionArray) {
     const pokeList = document.createElement("ul");
         pokeList.classList.add("poke-list")
@@ -262,6 +275,8 @@ function makePokeCollection(collectionArray) {
             const pokeElem = document.createElement("li"); //poke container
             const pokeName = document.createElement("span");
             pokeName.textContent = poke.name;
+            pokeName.classList.add("pokeName");
+            pokeName.addEventListener("click", reSearchPokemon); //search pokemon by name on click
             const pokePic = document.createElement("img");
             pokePic.setAttribute("src", poke.front_pic);
             pokeElem.appendChild(pokeName);
@@ -317,14 +332,6 @@ function cleanTypesList() {
 
 /*---------- NAMES LISTS ----------*/
 
-//Get the currect URL from the poke object and sends to getType function 
-//to find names list
-// function getTypeUrl(type) {
-//     const listIndex = PokemonObject.types.indexOf(type);
-//     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
-
-//     getType(namesUrl);   
-// }
 //Build name list from names arry to the DOM
 function NameListToDOM(namesArr) {
     //Create the list element with the drop down class for design
@@ -346,7 +353,7 @@ function NameListToDOM(namesArr) {
 //Re-search pokemon by name list selestion
 function reSearchPokemon(event) {
     const name = event.target.textContent;
-    searchPokemon(name);
+    searchPokemonByName(name);
 }
 
 /*---------- POKEMON OBJECT ----------*/
