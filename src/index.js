@@ -56,10 +56,30 @@ catchBtn.addEventListener("click", catchPoke);
 releaseBtn.addEventListener("click", releasePoke);
 collectionBtn.addEventListener("click", showcollection);
 
-saveBtn.addEventListener("click", () => document.getElementById("userName").setAttribute("disabled", true));
+saveBtn.addEventListener("click", getUser);
 changeBtn.addEventListener("click", () => document.getElementById("userName").removeAttribute("disabled"));
 
 /*---------- NETWORK ----------*/
+//
+async function getUser() {
+    try {
+        document.getElementById("userName").setAttribute("disabled", true);
+        const userName = document.getElementById("userName").value;
+        playLoader();
+        const response = await fetch(`${baseUrl}/info/`, {
+            method: "POST",
+            "headers": {
+                "username": userName
+            }
+        });
+        stopLoader();
+    } catch(error) {
+        console.log(error)
+        errorMessege("missing user name");
+        stopLoader();
+    }
+}
+
 //POKEMONS CPLLECTION
 
 //Show users collection 
@@ -97,7 +117,7 @@ async function releasePoke() {
         successMessege("You released the pokemon");
         stopLoader();
     } catch(error) {
-        errorMessege(error);
+        errorMessege("Pokemon is not in your collection");
         stopLoader();
     }
 }
@@ -117,7 +137,7 @@ async function catchPoke() {
         successMessege("You caught the pokemon");
         stopLoader();
     } catch (error) {
-        errorMessege(error);
+        errorMessege("Pokemon already caught");
         stopLoader();
     }
 }
@@ -140,7 +160,7 @@ async function searchPokemonByName(searchName){
         stopLoader();
     } catch (error) {
         searchInputName.value = ""; //clean search input
-       errorMessege(error);
+       errorMessege("pokemon not found");
        stopLoader();
     }
 }
@@ -163,7 +183,7 @@ async function searchPokemonByID(searchId) {
         stopLoader();
     } catch (error) {
        searchInputID.value = ""; //clean search input
-       errorMessege(error);
+       errorMessege("pokemon not found");
        stopLoader();
     }
 }
@@ -182,7 +202,7 @@ async function getType(type) {
         stopLoader();
 
     } catch (error) {
-        errorMessege(error);
+        errorMessege("names list not found");
         stopLoader();
     }
 }
