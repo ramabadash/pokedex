@@ -21,6 +21,8 @@ const abilityListElem = document.getElementById("abilitiesList");
 
 const catchBtn = document.getElementById("catch");
 const releaseBtn = document.getElementById("release");
+const collectionBtn = document.getElementById("collection-btn");
+
 /*---------- EVENT LISTENERS ----------*/
 //Serach related event listeners
 // searchBtnName.addEventListener("click", (event)=> {
@@ -50,8 +52,32 @@ moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
 
 //catchBtn.addEventListener("click", catchPoke);
 releaseBtn.addEventListener("click", releasePoke);
+collectionBtn.addEventListener("click", showcollection);
 
 /*---------- NETWORK ----------*/
+//Show users collection 
+async function showcollection() {
+    try {
+        const userName = document.getElementById("userName").value;
+        playLoader();
+        const response = await axios.get(`${baseUrl}/pokemon/`, {
+            "headers" : {
+                "username": userName,
+            }
+        })
+        const collectionArray = await response.data;
+        console.log(collectionArray);
+
+        collectionToDom(collectionArray);
+
+        stopLoader();
+    } catch (error) {
+        errorMessege(error);
+        stopLoader();
+    }
+}
+
+
 //Release poke from user collection
 async function releasePoke() {
     try {
@@ -62,14 +88,12 @@ async function releasePoke() {
                 "username": userName,
             }
         });
-        console.log(response)
         stopLoader();
     } catch(error) {
         errorMessege(error);
         stopLoader();
     }
 }
-
 
 //Serch pokemon by ID and update the PokemonObject with the data 
 async function searchPokemonByID(searchId) {
@@ -128,12 +152,12 @@ function showNames(event) {
 
 //Changs the pokemon img to fron_defult on mouse leave
 function changeImgToFront(event){
-    imgElem.setAttribute("src", PokemonObject.frontImgSrc);
+    imgElem.setAttribute("src", PokemonObject.front_pic);
 } 
 
 //Changs the pokemon img to back_defult on mouse over
 function changeImgToBack(event){
-    imgElem.setAttribute("src", PokemonObject.backImgSrc);
+    imgElem.setAttribute("src", PokemonObject.back_pic);
 } 
 
 /*---------- DOM RELATED ----------*/
@@ -143,8 +167,8 @@ function updatePokemonDom(){
     nameElem.textContent = PokemonObject.name; //update name
     heightElem.textContent = PokemonObject.height; //update height
     weightElem.textContent = PokemonObject.weight; //update weight
-    imgElem.setAttribute("src", PokemonObject.frontImgSrc); //update img
-    createTypesList (PokemonObject.typeList); //update TypesList
+    imgElem.setAttribute("src", PokemonObject.front_pic); //update img
+    createTypesList (PokemonObject.types); //update TypesList
     createAbilitiesList(PokemonObject.abilities) //update Ability list
 }
 //Play loader
@@ -158,6 +182,46 @@ function playLoader() {
 //Stop loader
 function stopLoader() {
     document.querySelector(".loader").remove();
+}
+
+//Add collection to DOM
+function collectionToDom(collectionArray) {
+    //container element
+    const currectCollection = document.createElement("div");
+    currectCollection.classList.add("collection");
+    
+    //close button
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "close❌";
+    closeBtn.addEventListener("click", ()=> document.querySelector(".collection").remove());
+    currectCollection.appendChild(closeBtn);
+    //Create list
+    if (collectionArray.length === 0) {
+        const emptyMessege = document.createElement("p");
+        emptyMessege.textContent = "Youre collectioin is empty";
+        currectCollection.appendChild(emptyMessege);
+    } else {
+        const pokeList = makePoleCOllection(collectionArray); //create collection representors
+        currectCollection.appendChild(pokeList);     //append to dom
+    }
+    searchArea.appendChild(currectCollection);
+}
+//
+function makePoleCOllection(collectionArray) {
+    const pokeList = document.createElement("ul");
+        pokeList.classList.add("poke-list")
+        for (let poke of collectionArray) { 
+            poke = JSON.parse(poke); //parse info
+            const pokeElem = document.createElement("li"); //poke container
+            const pokeName = document.createElement("span");
+            pokeName.textContent = poke.name;
+            const pokePic = document.createElement("img");
+            pokePic.setAttribute("src", poke.front_pic);
+            pokeElem.appendChild(pokeName);
+            pokeElem.appendChild(pokePic);
+            pokeList.appendChild(pokeElem);
+        }
+    return pokeList;
 }
 
 /*---------- ABILITY LISTS ----------*/
@@ -209,7 +273,7 @@ function cleanTypesList() {
 //Get the currect URL from the poke object and sends to getType function 
 //to find names list
 function getTypeUrl(type) {
-    const listIndex = PokemonObject.typeList.indexOf(type);
+    const listIndex = PokemonObject.types.indexOf(type);
     const namesUrl = PokemonObject.namesRelatedToTypesUrls[listIndex];
 
     //getType(namesUrl);   
@@ -245,9 +309,9 @@ let PokemonObject = {
     name: "",
     height: "", 
     weight: "",
-    frontImgSrc: "./img/pokee.png",
-    backImgSrc: "./img/pokee.png",
-    typeList: [],
+    front_pic: "./img/pokee.png",
+    back_pic: "./img/pokee.png",
+    types: [],
     namesRelatedToTypesUrls: [],
     abilities: []
 }
@@ -259,16 +323,16 @@ function updatePokemonObject(pokemonData) {
     PokemonObject.name = pokemonData.name;
     PokemonObject.height = pokemonData.height;
     PokemonObject.weight = pokemonData.weight;
-    PokemonObject.frontImgSrc = pokemonData.front_pic;
-    PokemonObject.backImgSrc = pokemonData.back_pic;
-    PokemonObject.typeList = [];
+    PokemonObject.front_pic = pokemonData.front_pic;
+    PokemonObject.back_pic = pokemonData.back_pic;
+    PokemonObject.types = [];
     PokemonObject.namesRelatedToTypesUrls = [];
     PokemonObject.abilities =[];
 
     //Update 2 arrays 1-types arry 2-types urls in the same order,
     //so we can connect type to url by index
     for (let type of pokemonData.types){
-        PokemonObject.typeList.push(type);
+        PokemonObject.types.push(type);
         //PokemonObject.namesRelatedToTypesUrls.push(type.type.url);
     }
     //
@@ -286,15 +350,6 @@ function errorMessege(messege) {
     searchArea.appendChild(errorElem);
     setTimeout(() => errorElem.remove() , 5000);
 }
-// //
-// function userNameVdilation(){
-//     const userName = document.getElementById("userName").value;
-//     if (!userName) throw new Error ("enter user name");
-//     return userName;
-// }
-
-
-
 
 // //Serch pokemon by ID or Name and update the PokemonObject with the data 
 // async function searchPokemon(searchValue) {
