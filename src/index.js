@@ -1,6 +1,7 @@
 "use strict"
 
 /*---------- VARIABLES DECLATARION ----------*/
+const baseUrl = "http://localhost:3000";
 const searchArea = document.querySelector("#serach-div");
 
 const searchBtnID = document.getElementById("search-id-btn");
@@ -18,6 +19,8 @@ const imgElem = document.getElementById("pokemonImg");
 const typeListElem = document.getElementById("typeList");
 const abilityListElem = document.getElementById("abilitiesList");
 
+const catchBtn = document.getElementById("catch");
+const releaseBtn = document.getElementById("release");
 /*---------- EVENT LISTENERS ----------*/
 //Serach related event listeners
 // searchBtnName.addEventListener("click", (event)=> {
@@ -45,22 +48,41 @@ imgElem.addEventListener("mouseleave", changeImgToFront);
 //Search the next or previus pokemon on click
 moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
 
+//catchBtn.addEventListener("click", catchPoke);
+releaseBtn.addEventListener("click", releasePoke);
+
 /*---------- NETWORK ----------*/
+//Release poke from user collection
+async function releasePoke() {
+    try {
+        const userName = document.getElementById("userName").value;
+        playLoader();
+        const response = await axios.delete(`${baseUrl}/pokemon/release/${PokemonObject.id}`, {
+            "headers": {
+                "username": userName,
+            }
+        });
+        console.log(response)
+        stopLoader();
+    } catch(error) {
+        errorMessege(error);
+        stopLoader();
+    }
+}
+
+
 //Serch pokemon by ID and update the PokemonObject with the data 
 async function searchPokemonByID(searchId) {
     try {
         const userName = document.getElementById("userName").value;
         playLoader();
         //Send GET request
-        console.log(userName);
-        const response = await axios.get(`http://localhost:3000/pokemon/get/${searchId}/`, {
+        const response = await axios.get(`${baseUrl}/pokemon/get/${searchId}/`, {
             "headers": {
-                 "username": "rama"
+                 "username": userName
                 } 
         });
         const pokemonAns = await response.data;
-        console.log(pokemonAns);
-
         updatePokemonObject(pokemonAns);//Update PokemonObject
 
         updatePokemonDom();//Update DOM
@@ -70,58 +92,11 @@ async function searchPokemonByID(searchId) {
         stopLoader();
     } catch (error) {
        searchInputID.value = ""; //clean search input
-       errorMessege(error);
+       console.log(error)
+       errorMessege(error.status);
        stopLoader();
     }
 }
-
-
-// //Serch pokemon by ID or Name and update the PokemonObject with the data 
-// async function searchPokemon(searchValue) {
-//     try {
-//         playLoader();
-//         //Send GET request
-//         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchValue}/`);
-//         const data = await response;
-//         const pokemonAns = data.data;
-
-//         updatePokemonObject(pokemonAns);//Update PokemonObject
-
-//         updatePokemonDom();//Update DOM
-
-//         searchInput.value = ""; //clean search input
-
-//         stopLoader();
-//     } catch (error) {
-//         searchInput.value = ""; //clean search input
-//        errorMessege("can't find your pokemon");
-//        stopLoader();
-//     }
-// }
-//Get url, send a GET request to the poke API ,
-//and return an array of names thet also have the type that the url belongs to
-// async function getType(url) {
-//     try {
-//         const response = await fetch(url, {
-//             method:"GET",
-//             headers: {  
-//                 Accept: "application/json",
-//                 "Content-Type": "application/json" 
-//             }
-//         });
-//         const data = await response.json();
-
-//         //Build the names array
-//         const namesByTypeArr = [];
-//         for (let pokemon of data.pokemon) {
-//             namesByTypeArr.push(pokemon.pokemon.name);
-//         }
-        
-//         NameListToDOM(namesByTypeArr); //Build the names on the DOM
-//     } catch (error) {
-//         errorMessege("sorry something went wrong");
-//     }
-// }
 
 /*---------- HANDLERS ----------*/
 //Search the next or previus pokemon on click
@@ -139,7 +114,7 @@ function movePokemon(event) {
         if (currentPokemonId === "" || currentPokemonId === 1 ) nextPokeId = 898;
         else nextPokeId = currentPokemonId - 1;
     }
-    searchPokemon(nextPokeId);
+    searchPokemonByID(nextPokeId);
 }
 //Display and hidde names list on click
 function showNames(event) {
@@ -301,7 +276,6 @@ function updatePokemonObject(pokemonData) {
         PokemonObject.abilities.push(ability);
         //PokemonObject.namesRelatedToTypesUrls.push(type.type.url);
     }
-    console.log(PokemonObject);
 }
 /*---------- ERROR HANDLERS ----------*/
 function errorMessege(messege) {
@@ -310,5 +284,61 @@ function errorMessege(messege) {
     errorElem.classList.add("error-messege");
     const searchArea = document.querySelector("#serach-div");
     searchArea.appendChild(errorElem);
-    setTimeout(() => errorElem.remove() , 3000);
+    setTimeout(() => errorElem.remove() , 5000);
 }
+// //
+// function userNameVdilation(){
+//     const userName = document.getElementById("userName").value;
+//     if (!userName) throw new Error ("enter user name");
+//     return userName;
+// }
+
+
+
+
+// //Serch pokemon by ID or Name and update the PokemonObject with the data 
+// async function searchPokemon(searchValue) {
+//     try {
+//         playLoader();
+//         //Send GET request
+//         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchValue}/`);
+//         const data = await response;
+//         const pokemonAns = data.data;
+
+//         updatePokemonObject(pokemonAns);//Update PokemonObject
+
+//         updatePokemonDom();//Update DOM
+
+//         searchInput.value = ""; //clean search input
+
+//         stopLoader();
+//     } catch (error) {
+//         searchInput.value = ""; //clean search input
+//        errorMessege("can't find your pokemon");
+//        stopLoader();
+//     }
+// }
+//Get url, send a GET request to the poke API ,
+//and return an array of names thet also have the type that the url belongs to
+// async function getType(url) {
+//     try {
+//         const response = await fetch(url, {
+//             method:"GET",
+//             headers: {  
+//                 Accept: "application/json",
+//                 "Content-Type": "application/json" 
+//             }
+//         });
+//         const data = await response.json();
+
+//         //Build the names array
+//         const namesByTypeArr = [];
+//         for (let pokemon of data.pokemon) {
+//             namesByTypeArr.push(pokemon.pokemon.name);
+//         }
+        
+//         NameListToDOM(namesByTypeArr); //Build the names on the DOM
+//     } catch (error) {
+//         errorMessege("sorry something went wrong");
+//     }
+// }

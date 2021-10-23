@@ -22,19 +22,17 @@
     <h1><img id="header-Img" src="./img/Pokédex_logo.png"></h1>
 
     <input type="text" placeholder="your user name" id="userName">
-
+    <!-- SEARCH BY ID -->
     <div id="serach-div">
         <input id="searchInputId" type="text" 
         placeholder="🔎Search pokemon by Id here..." name="searchID">
-
         <button id = "search-id-btn" >
             <img src="./img/logo-icon.png">
             Search By Id
         </button>
-
+        <!-- SEARCH BY NAME -->
         <input id="searchInputName" type="text" 
         placeholder="🔎Search pokemon by name here..." name="searchName">
-
         <button id = "search-name-btn" >
             <img src="./img/logo-icon.png">
             Search By Name
@@ -47,6 +45,9 @@
 
         <button id="previous-btn" class="move-btn">⏪</button>
         <button id="next-btn" class="move-btn">⏩</button>
+        <button id="collection-btn" class="collection-btn">
+            <img src="img/favicon.ico">
+            My collection</button>
 
         <ul class="pokemon-card">
             <li class="img-area">
@@ -74,6 +75,10 @@
             </li>
             <li>Abilities: 
                 <div id="abilitiesList"></div>
+            </li>
+            <li>
+                <button id="catch"><img src="img/favicon.ico">Catch</button>
+                <button id="release"><img src="img/favicon.ico">Release</button>
             </li>
         </ul>
     </div>

@@ -119,12 +119,18 @@ li {
     cursor: pointer;
 }
 .type:hover {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     color: rgba(43, 196, 107, 0.425);
 }
 .label {
     background-color: inherit;
     font-size: 5px;
+}
+.ability {
+    background-color: rgb(41, 72, 112);
+    cursor: default;
+    color:rgb(255, 255, 255);
+    width: auto;
 }
 /*DROPDOWM NAMES LIST*/
 .dropDown {
@@ -156,6 +162,12 @@ li {
     width: 10%;
     font-size: 20px;
     background-color: lightslategray;
+}
+.collection-btn, #catch, #release {
+    background-color: brown;
+    width: auto;
+    height: 10%;
+    color: cornsilk;
 }
 /*ERROR*/
 .error-messege {
