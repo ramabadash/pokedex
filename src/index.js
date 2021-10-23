@@ -22,6 +22,8 @@ const abilityListElem = document.getElementById("abilitiesList");
 const catchBtn = document.getElementById("catch");
 const releaseBtn = document.getElementById("release");
 const collectionBtn = document.getElementById("collection-btn");
+const saveBtn = document.getElementById("save-btn");
+const changeBtn = document.getElementById("change-btn");
 
 /*---------- EVENT LISTENERS ----------*/
 //Serach related event listeners
@@ -53,6 +55,9 @@ moveButtons.forEach((button) => button.addEventListener("click", movePokemon));
 catchBtn.addEventListener("click", catchPoke);
 releaseBtn.addEventListener("click", releasePoke);
 collectionBtn.addEventListener("click", showcollection);
+
+saveBtn.addEventListener("click", () => document.getElementById("userName").setAttribute("disabled", true));
+changeBtn.addEventListener("click", () => document.getElementById("userName").removeAttribute("disabled"));
 
 /*---------- NETWORK ----------*/
 //POKEMONS CPLLECTION
