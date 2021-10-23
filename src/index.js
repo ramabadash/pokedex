@@ -198,7 +198,7 @@ async function getType(type) {
             }
         });
         const namesArray = await response.data;
-        NameListToDOM(namesArray); //Build the names on the DOM
+        nameListToDOM(namesArray); //Build the names on the DOM
         stopLoader();
 
     } catch (error) {
@@ -361,7 +361,7 @@ function cleanTypesList() {
 /*---------- NAMES LISTS ----------*/
 
 //Build name list from names arry to the DOM
-function NameListToDOM(namesArr) {
+function nameListToDOM(namesArr) {
     //Create the list element with the drop down class for design
     const currentNameList = document.createElement("ul");
     currentNameList.classList.add("dropDown");
@@ -409,16 +409,13 @@ function updatePokemonObject(pokemonData) {
     PokemonObject.types = [];
     PokemonObject.abilities =[];
 
-    //Update 2 arrays 1-types arry 2-types urls in the same order,
-    //so we can connect type to url by index
+    //Update types arry
     for (let type of pokemonData.types){
         PokemonObject.types.push(type);
-        //PokemonObject.namesRelatedToTypesUrls.push(type.type.url);
     }
-    //
+    //Update abilities arry
     for (let ability of pokemonData.abilities){
         PokemonObject.abilities.push(ability);
-        //PokemonObject.namesRelatedToTypesUrls.push(type.type.url);
     }
 }
 /*---------- ERROR HANDLERS ----------*/
