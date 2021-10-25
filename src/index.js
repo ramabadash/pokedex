@@ -117,27 +117,26 @@ async function releasePoke() {
         successMessege("You released the pokemon");
         stopLoader();
     } catch(error) {
-        errorMessege("Pokemon is not in your collection");
+        errorMessege(error.response.data.error);
         stopLoader();
     }
 }
-//
+//Catch a poke to collection
 async function catchPoke() {
     try {
         playLoader();
         const userName = document.getElementById("userName").value;
-        const response = await fetch(`${baseUrl}/pokemon/catch/${PokemonObject.id}`, {
-            method: "PUT", 
-            headers: {
+        const response = await axios.put(`${baseUrl}/pokemon/catch/${PokemonObject.id}`, 
+            {"pokemon" : PokemonObject},
+            {headers: {
                 "username" : userName,
                 "Content-Type": "application/json"
-            }, 
-            body: JSON.stringify({"pokemon" : PokemonObject}),
-        });
+            }}, 
+        );
         successMessege("You caught the pokemon");
         stopLoader();
     } catch (error) {
-        errorMessege("Pokemon already caught");
+        errorMessege(error.response.data.error);
         stopLoader();
     }
 }
@@ -160,7 +159,7 @@ async function searchPokemonByName(searchName){
         stopLoader();
     } catch (error) {
         searchInputName.value = ""; //clean search input
-       errorMessege("pokemon not found");
+       errorMessege(error.response.data.error);
        stopLoader();
     }
 }
@@ -183,7 +182,7 @@ async function searchPokemonByID(searchId) {
         stopLoader();
     } catch (error) {
        searchInputID.value = ""; //clean search input
-       errorMessege("pokemon not found");
+       errorMessege(error.response.data.error);
        stopLoader();
     }
 }
